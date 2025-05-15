@@ -1,0 +1,25 @@
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  text-align: center;
+}
+
+.link {
+  text-decoration: none;
+  color: #333;
+}
+
+.image {
+  border-radius: 8px;
+}
+
+.title {
+  font-size: 18px;
+  margin: 10px 0;
+}
