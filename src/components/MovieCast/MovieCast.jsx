@@ -32,3 +32,5 @@ function MovieCast() {
     </div>
   );
 }
+
+export default MovieCast;
