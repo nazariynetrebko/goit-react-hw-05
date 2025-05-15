@@ -27,9 +27,11 @@ function MovieDetailsPage() {
     };
     fetchMovieDetails();
   }, [movieId]);
+
   const goBack = () => {
     navigate(from);
   };
+
   if (!movie) return <div className={styles.loading}>Завантаження...</div>;
 
   return (
@@ -38,6 +40,15 @@ function MovieDetailsPage() {
         Назад
       </button>
       <h1 className={styles.title}>{movie.title}</h1>
+      {movie.poster_path ? (
+        <img
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          alt={movie.title}
+          className={styles.poster}
+        />
+      ) : (
+        <div className={styles.noPoster}>Постер відсутній</div>
+      )}
       <p className={styles.overview}>{movie.overview}</p>
       <nav className={styles.nav}>
         <Link to="cast" className={styles.link}>

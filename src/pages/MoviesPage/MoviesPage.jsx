@@ -1,8 +1,7 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import { searchMovies } from "../../services/tmdbApi";
 import MovieList from "../../components/MovieList/MovieList";
 import styles from "./moviesPage.module.css";
-import { StaticRouterProvider } from "react-router-dom";
 
 function MoviesPage() {
   const [query, setQuery] = useState("");
