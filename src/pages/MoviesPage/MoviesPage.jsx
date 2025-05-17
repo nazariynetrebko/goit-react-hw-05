@@ -1,29 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { searchMovies } from "../../services/tmdbApi";
 import MovieList from "../../components/MovieList/MovieList";
 import styles from "./moviesPage.module.css";
 
 function MoviesPage() {
-  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("query") || "";
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
     if (query.trim() === "") return;
-    try {
-      const results = await searchMovies(query);
-      setMovies(results);
-    } catch (error) {
-      console.error("Помилка при пошуку фільмів:", error);
-    }
+    const fetchMovies = async () => {
+      try {
+        const results = await searchMovies(query);
+        setMovies(results);
+      } catch (error) {
+        console.error("Помилка при пошуку фільмів:", error);
+      }
+    };
+    fetchMovies();
+  }, [query]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formQuery = e.target.elements.query.value;
+    setSearchParams({ query: formQuery });
   };
+
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.form}>
         <input
           type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          name="query"
+          defaultValue={query}
           placeholder="Пошук фільмів"
           className={styles.input}
         />

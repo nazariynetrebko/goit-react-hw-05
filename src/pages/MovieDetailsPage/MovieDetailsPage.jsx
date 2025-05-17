@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Link,
   Outlet,
@@ -14,7 +14,7 @@ function MovieDetailsPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
-  const from = location.state?.from || "/movies";
+  const backLinkRef = useRef(location.state?.from || "/movies");
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -29,7 +29,7 @@ function MovieDetailsPage() {
   }, [movieId]);
 
   const goBack = () => {
-    navigate(from);
+    navigate(backLinkRef.current);
   };
 
   if (!movie) return <div className={styles.loading}>Завантаження...</div>;
